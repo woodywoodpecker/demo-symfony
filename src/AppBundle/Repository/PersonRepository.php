@@ -11,8 +11,13 @@ namespace AppBundle\Repository;
 class PersonRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function createPerson () {
-
+    public function findPerson () {
+        $pro = $this->getEntityManager()->getRepository("AppBundle:Person")->find(2);
+        if ($pro) {
+            return $pro;
+        } else {
+            throw $this->createNotFoundException('No product found for id 2');
+        }
     }
 
 }

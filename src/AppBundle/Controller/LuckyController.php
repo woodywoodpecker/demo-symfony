@@ -2,6 +2,7 @@
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
 
+    use AppBundle\AppBundle;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
@@ -75,6 +76,23 @@
             $this->getDoctrine()->getManager()->flush();
             return new Response(
                 '<html><body>A person has been updated.</body></html>'
+            );
+        }
+
+        /**
+         * @Route("/person/rep/get")
+         */
+        public function getByRepository () {
+            $service = $this->get("person_repository_service");
+            if (!$service) {
+                throw $this->createNotFoundException('No service found ');
+            }
+            $person = $service->findPerson();
+            if (!$person){
+                throw $this->createNotFoundException('No person found ');
+            }
+            return new Response(
+                '<html><body>A person has been found.name is '.$person->getName().' </body></html>'
             );
         }
     }
