@@ -20,4 +20,12 @@ class PersonRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
+    public function findPersonByName ($name) {
+        $repository = $this->getEntityManager()->getRepository("AppBundle:Person");
+        $query = $repository->createQueryBuilder("p")
+            ->where("p.name = :name")
+            ->setParameter("name",$name)
+            ->getQuery();
+        return $query->getResult();
+    }
 }

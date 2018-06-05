@@ -95,6 +95,21 @@
                 '<html><body>A person has been found.name is '.$person->getName().' </body></html>'
             );
         }
+
+        /**
+         * @Route("/person/rep/getxxqq")
+         */
+        public function getPersonByQB () {
+            $service = $this->get("person_repository_service");
+            if (!$service) {
+                throw $this->createNotFoundException('No service found ');
+            }
+            $persons = $service->findPersonByName("xxqq");
+            $person = $persons[0];
+            return new Response(
+                '<html><body>A person has been found.name is '.$person->getName().' </body></html>'
+            );
+        }
     }
 
 ?>
