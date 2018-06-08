@@ -7,6 +7,7 @@
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
     use AppBundle\Entity\Person;
+    use AppBundle\Entity\Category;
 
     class LuckyController extends Controller
     {
@@ -108,6 +109,31 @@
             $person = $persons[0];
             return new Response(
                 '<html><body>A person has been found.name is '.$person->getName().' </body></html>'
+            );
+        }
+
+        /**
+         * @Route("/person/category/add")
+         */
+        public function createPersonWithCategory () {
+            $category = new Category();
+            $category->setName('java programmer');
+
+            $per = new Person();
+            $per->setName('God');
+            $per->setAge(1000);
+            $per->setDesc('Control the world!');
+
+            $per->setCategory($category);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($category);
+            $entityManager->persist($per);
+            $entityManager->flush();
+
+            return new Response(
+                'Saved new person with id: '.$per->getId()
+                .' and new category with id: '.$category->getId()
             );
         }
     }

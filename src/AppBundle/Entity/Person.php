@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Person
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="persons")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+
     /**
      * @var int
      *
@@ -124,5 +131,23 @@ class Person
     {
         return $this->desc;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+
 }
 
